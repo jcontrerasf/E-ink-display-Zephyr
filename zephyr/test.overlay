@@ -1,0 +1,51 @@
+&i2c0 {
+	sda-pin = <41>; //P1.09  ->  1x32 + 9  = 41
+	scl-pin = <43>; //P1.11  ->  1x32 + 11 = 43
+};
+
+//&spi1 { //Ojo, usando SPI1 UNO
+//    sck-pin  = <31>; //P0.31  ->  0x32 + 31 = 31
+//    mosi-pin = <30>; //P0.30  ->  0x32 + 30 = 30
+//};
+
+/ {
+    aliases {
+        respin = "/epd_out/res";
+        cspin = "/epd_out/cs";
+        dcpin = "/epd_out/dc";
+        busypin = "/epd_in/busy";
+        //vdiv = "/vbatt";
+    };
+    epd_out {
+        compatible = "gpio-leds"; 
+        res {
+            gpios = <&gpio0 17 GPIO_ACTIVE_HIGH>;
+            label = "EDP_RES";
+        };
+        cs {
+            gpios = <&gpio1 4 GPIO_ACTIVE_HIGH>;
+            label = "EDP_CS";
+        };
+        dc {
+            gpios = <&gpio0 22 GPIO_ACTIVE_HIGH>;
+            label = "EDP_DC";
+        };
+    };
+
+    epd_in {
+        compatible = "gpio-keys";
+        busy {
+            gpios = <&gpio1 10 GPIO_ACTIVE_HIGH>;
+            label = "EDP_BUSY";
+        };
+    };
+
+    // vbatt {
+    //     compatible = "voltage-divider";
+    //     label = "Voltage Divider";
+    //     io-channels = <&adc 5>;
+    //     power-gpios = <&gpio0 29 0>;
+    //     output-ohms = <100000>;
+    //     status = "okay";
+    // };
+};
